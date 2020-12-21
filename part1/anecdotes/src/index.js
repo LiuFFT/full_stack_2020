@@ -15,6 +15,9 @@ const App = (props) => {
     const [votes, setVotes]= useState(points)
 
 
+    console.log(votes.indexOf(Math.max.apply(null, votes)))
+
+    const mostVotes = votes.indexOf(Math.max.apply(null, votes))
 
     const handleClick = () => {
         setSelected(Math.floor( Math.random() * 6 ))
@@ -38,6 +41,9 @@ const App = (props) => {
             <p>has {votes[selected]} votes</p>
             <Button text="vote" onClick={handleAddVoteClick}/>
             <Button text="next anecdotes" onClick={handleClick}/>
+
+            <h1>Anecdote with most votes</h1>
+            <p>{props.anecdotes[mostVotes]} has {votes[mostVotes]} votes</p>
         </div>
     )
 }

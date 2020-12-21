@@ -12,12 +12,18 @@ const Statistic = (props) => {
     const {text, value} = props
     if (text === "positive"){
         return (
-            <p>{text} {value}%</p>
+            [
+                <td key={text}>{text}</td>,
+                <td key={value}>{value}%</td>
+            ]
         )
     }
 
     return (
-        <p>{text} {value}</p>
+        [
+            <td key={text}>{text}</td>,
+            <td key={value}>{value}</td>
+        ]
     )
 }
 
@@ -34,12 +40,28 @@ const Statistics = (props) => {
 
     return (
         <div>
-            <Statistic text="good" value={good}/>
-            <Statistic text="neutral" value={neutral}/>
-            <Statistic text="bad" value={bad}/>
-            <Statistic text="all" value={bad + neutral + good}/>
-            <Statistic text="average" value={(good - bad)/(bad + neutral + good)}/>
-            <Statistic text="positive" value={(good * 100)/(bad + neutral + good)}/>
+            <table>
+                <tbody>
+                    <tr>
+                        <Statistic text="good" value={good}/>
+                    </tr>
+                    <tr>
+                        <Statistic text="neutral" value={neutral}/>
+                    </tr>
+                    <tr>
+                        <Statistic text="bad" value={bad}/>
+                    </tr>
+                    <tr>
+                        <Statistic text="all" value={bad + neutral + good}/>
+                    </tr>
+                    <tr>
+                        <Statistic text="average" value={(good - bad)/(bad + neutral + good)}/>
+                    </tr>
+                    <tr>
+                        <Statistic text="positive" value={(good * 100)/(bad + neutral + good)}/>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     )
 }

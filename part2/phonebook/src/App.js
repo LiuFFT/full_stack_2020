@@ -3,18 +3,24 @@ import Person from "./components/Person";
 
 const App = () => {
     const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', phone: '040-1120909' }
     ])
     const [ newName, setNewName ] = useState('')
+    const [ newPhone, setNewPhone ] = useState('')
 
     const handleNameChange = (event) =>{
         setNewName(event.target.value)
     }
 
+    const handlePhoneChange = (event) =>{
+        setNewPhone(event.target.value)
+    }
+
     const addPerson = (event) => {
         event.preventDefault()
         const personObj = {
-            name : newName
+            name : newName,
+            phone: newPhone
         }
         if (newName in persons.map(name=>name)){
             console.log(`${newName} is already added to phonebook`)
@@ -22,6 +28,7 @@ const App = () => {
         }else {
             setPersons(persons.concat(personObj))
             setNewName('')
+            setNewPhone('')
         }
     }
 
@@ -33,6 +40,9 @@ const App = () => {
           <div>
             name: <input  value={newName} onChange={handleNameChange}/>
           </div>
+            <div>
+                phone: <input  value={newPhone} onChange={handlePhoneChange}/>
+            </div>
           <div>
             <button type="submit" onClick={addPerson}>add</button>
           </div>
@@ -41,7 +51,7 @@ const App = () => {
         <div>
             <ul>
                 {persons.map(person =>
-                    <Person key={person.name} name={person.name}/>
+                    <Person key={person.name} name={person.name} phone={person.phone}/>
                 )}
             </ul>
         </div>

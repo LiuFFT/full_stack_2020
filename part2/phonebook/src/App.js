@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import Person from "./components/Person";
+import Filter from "./components/Filter";
+import PersonForm from "./components/PersonForm";
+import Number from "./components/Number";
 
 const App = () => {
     const [persons, setPersons] = useState([
@@ -39,9 +41,11 @@ const App = () => {
         event.preventDefault()
         const personObj = {
             name : newName,
-            phone: newNumber
+            number: newNumber
         }
-        if (newName in persons.map(name=>name)){
+        // console.log(persons.find((person) => person.name === newName))
+        const personExist = persons.find((person) => person.name === newName)
+        if (personExist){
             console.log(`${newName} is already added to phonebook`)
             alert(`${newName} is already added to phonebook`)
         }else {
@@ -53,32 +57,14 @@ const App = () => {
 
 
     return (
-      <div>
-        <h2>Phonebook</h2>
-          <div>
-              filter shown with <input  value={filter} onChange={handleFilterChange}/>
-          </div>
-          <h2> add a new</h2>
-        <form>
-          <div>
-            name: <input  value={newName} onChange={handleNameChange}/>
-          </div>
-            <div>
-                phone: <input  value={newNumber} onChange={handlePhoneChange}/>
-            </div>
-          <div>
-            <button type="submit" onClick={addPerson}>add</button>
-          </div>
-        </form>
-        <h2>Numbers</h2>
         <div>
-            <ul>
-                {filterPerson.map(person =>
-                    <Person key={person.name} name={person.name} phone={person.number}/>
-                )}
-            </ul>
+            <h2>Phonebook</h2>
+            <Filter value={filter} handleFilterChange={handleFilterChange}/>
+            <h2> add a new</h2>
+            <PersonForm newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handlePhoneChange={handlePhoneChange} addPerson={addPerson}/>
+            <h2>Numbers</h2>
+            <Number filterPerson={filterPerson}/>
         </div>
-      </div>
     )
 }
 

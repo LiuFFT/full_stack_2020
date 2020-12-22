@@ -1,4 +1,5 @@
 import React from 'react'
+import Weather from "./Weather";
 
 const Language = ({language}) => {
     return (
@@ -23,6 +24,9 @@ const CountryDetails = ({filteredCountries}) => {
             <div>
                 {/*eslint-disable-next-line*/}
                 <img src={filteredCountries.flag} style={{width: 200}}/>
+            </div>
+            <div>
+                <Weather capital={filteredCountries.capital}/>
             </div>
         </div>
     )

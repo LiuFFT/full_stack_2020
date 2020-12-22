@@ -13,7 +13,7 @@ const Countries = (prop) => {
             <div>
                 <ul>
                     {prop.filteredCountries.map(country =>
-                        <Country key={country.name} name={country.name}/>
+                        <Country key={country.name} country={country}/>
                     )}
                 </ul>
             </div>

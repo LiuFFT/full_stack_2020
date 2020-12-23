@@ -63,8 +63,22 @@ const App = () => {
         // console.log(persons.find((person) => person.name === newName))
         const personExist = persons.find((person) => person.name === newName)
         if (personExist){
-            console.log(`${newName} is already added to phonebook`)
-            alert(`${newName} is already added to phonebook`)
+            // console.log(`${newName} is already added to phonebook`)
+            // alert(`${newName} is already added to phonebook`)
+            const result = window.confirm(`${personExist.name} is already added to phonebook, replace the old number with a new one?`)
+            if (result){
+                personService
+                    .updatePerson(personExist.id,personObj)
+                    .then(returnedPerson => {
+                        setPersons(persons.map(person => person.id !==personExist.id ? person : returnedPerson))
+                    })
+                    .catch(error => {
+                        alert(
+                            `the note '${personExist.name}' was already deleted from server`
+                        )
+                        setPersons(persons.filter(n => n.id !== personExist.id))
+                    })
+            }
         }else {
             personService
                 .create(personObj)

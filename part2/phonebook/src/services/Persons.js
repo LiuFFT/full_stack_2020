@@ -30,5 +30,11 @@ const deletePerson = (id) => {
     })
 }
 
+const updatePerson = (id, newPerson) => {
+    const request = axios.put(`${baseUrl}/${id}`, newPerson);
+
+    return request.then(response => response.data);
+};
+
 // eslint-disable-next-line
-export default {create , update, getAll, deletePerson}
+export default {create , update, getAll, deletePerson, updatePerson}

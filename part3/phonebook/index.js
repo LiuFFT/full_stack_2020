@@ -90,9 +90,17 @@ const generateId = () => {
 app.post('/api/persons', (request, response) => {
     const body = request.body
 
+    // const uid = generateId()
+
+    const personExist = persons.find(person => person.name === body.name)
+
     if (!body.name || !body.number) {
         return response.status(400).json({
             error: 'name or number missing'
+        })
+    }else if (personExist){
+        return response.status(400).json({
+            error: `name must be unique, ${body.name} already exist`
         })
     }
 

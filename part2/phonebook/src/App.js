@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Number from "./components/Number";
-import axios from 'axios'
+import personService from "./services/Persons"
 
 const App = () => {
     const [persons, setPersons] = useState([
@@ -13,15 +13,14 @@ const App = () => {
 
 
     useEffect(() => {
-        console.log('effect')
-        axios
-            .get('http://localhost:3001/persons')
-            .then(response => {
-                console.log('promise fulfilled')
-                setPersons(response.data)
+        // console.log('effect')
+        personService
+            .getAll()
+            .then(initialPersons => {
+                setPersons(initialPersons)
             })
     }, [])
-    console.log('render', persons.length, 'persons')
+    // console.log('render', persons.length, 'persons')
 
     const filterPerson = persons.filter((person) => person.name.toLowerCase().includes(filter.toLowerCase()))
 
@@ -49,14 +48,13 @@ const App = () => {
             console.log(`${newName} is already added to phonebook`)
             alert(`${newName} is already added to phonebook`)
         }else {
-            axios
-                .post('http://localhost:3001/persons', personObj)
-                .then(response => {
-                    console.log(response)
+            personService
+                .create(personObj)
+                .then(returnedPersons => {
+                    setPersons(persons.concat(returnedPersons))
+                    setNewName('')
+                    setNewNumber('')
                 })
-            setPersons(persons.concat(personObj))
-            setNewName('')
-            setNewNumber('')
         }
     }
 

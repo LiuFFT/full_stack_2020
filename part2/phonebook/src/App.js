@@ -6,22 +6,11 @@ import axios from 'axios'
 
 const App = () => {
     const [persons, setPersons] = useState([
-        // { name: 'Arto Hellas', number: '040-123456' },
-        // { name: 'Ada Lovelace', number: '39-44-5323523' },
-        // { name: 'Dan Abramov', number: '12-43-234345' },
-        // { name: 'Mary Poppendieck', number: '39-23-6423122' }
     ])
     const [ newName, setNewName ] = useState('')
     const [ newNumber, setNewNumber ] = useState('')
     const [ filter, setNewFilter ] = useState('')
 
-    // const personToShow = (event) =>{
-    //     handleFilterChange(event)
-    //     const copy = persons.filter(person => person.name.toLowerCase().includes(filter))
-    //     console.log(copy)
-    //     setPersons(copy)
-    //     // setNewFilter('')
-    // }
 
     useEffect(() => {
         console.log('effect')
@@ -60,6 +49,11 @@ const App = () => {
             console.log(`${newName} is already added to phonebook`)
             alert(`${newName} is already added to phonebook`)
         }else {
+            axios
+                .post('http://localhost:3001/persons', personObj)
+                .then(response => {
+                    console.log(response)
+                })
             setPersons(persons.concat(personObj))
             setNewName('')
             setNewNumber('')

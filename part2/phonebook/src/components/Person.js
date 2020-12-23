@@ -11,7 +11,7 @@ const Person = ({ name, phone, handleDeletePerson, id}) => {
     // console.log("person:",id)
 
     return (
-        <div>
+        <div className='note'>
             <li>{name}  {phone} <Button text="delete" onClick={handleDeletePerson} id={id}/></li>
         </div>
     )

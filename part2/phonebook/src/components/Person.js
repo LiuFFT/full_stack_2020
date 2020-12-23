@@ -1,8 +1,19 @@
 import React from 'react'
 
-const Person = ({ name, phone}) => {
+const Button = ({ onClick, text ,id}) => (
+    <button onClick={onClick} data-id={id}>
+        {text}
+    </button>
+)
+
+const Person = ({ name, phone, handleDeletePerson, id}) => {
+
+    // console.log("person:",id)
+
     return (
-        <li>{name}  {phone}</li>
+        <div>
+            <li>{name}  {phone} <Button text="delete" onClick={handleDeletePerson} id={id}/></li>
+        </div>
     )
 }
 

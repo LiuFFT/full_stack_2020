@@ -36,6 +36,24 @@ const App = () => {
         setNewFilter(event.target.value)
     }
 
+    const handleDeletePerson = (event) => {
+        const pid = event.target.dataset.id
+        // console.log("id:",pid)
+        const id = parseFloat(pid)
+        // console.log(id)
+
+        const person = persons.find(p => p.id===id);
+        // const person =
+
+        console.log("person:", person)
+
+        const result = window.confirm(`Delete ${person.name}?`)
+        if (result){
+            deletePerson(id)
+            alert(`${person.name} is deleted`)
+        }
+    }
+
     const addPerson = (event) => {
         event.preventDefault()
         const personObj = {
@@ -58,6 +76,14 @@ const App = () => {
         }
     }
 
+    const deletePerson = (id) =>{
+        personService
+            .deletePerson(id)
+            .finally(()=>{
+                setPersons(persons.filter(p => p.id !== id))
+            })
+    }
+
 
     return (
         <div>
@@ -66,7 +92,7 @@ const App = () => {
             <h2> add a new</h2>
             <PersonForm newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handlePhoneChange={handlePhoneChange} addPerson={addPerson}/>
             <h2>Numbers</h2>
-            <Number filterPerson={filterPerson}/>
+            <Number filterPerson={filterPerson} handleDeletePerson={(event)=>handleDeletePerson(event)}/>
         </div>
     )
 }

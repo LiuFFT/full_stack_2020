@@ -23,5 +23,12 @@ const getAll = () => {
     })
 }
 
+const deletePerson = (id) => {
+    const request = axios.delete(`${baseUrl}/${id}`)
+    return request.then(response => {
+        return response.data
+    })
+}
+
 // eslint-disable-next-line
-export default {create , update, getAll}
+export default {create , update, getAll, deletePerson}

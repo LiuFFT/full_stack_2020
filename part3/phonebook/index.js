@@ -71,27 +71,21 @@ app.post('/api/persons', (request, response) => {
 
     // const uid = generateId()
 
-    const personExist = persons.find(person => person.name === body.name)
 
     if (!body.name || !body.number) {
         return response.status(400).json({
             error: 'name or number missing'
         })
-    }else if (personExist){
-        return response.status(400).json({
-            error: `name must be unique, ${body.name} already exist`
-        })
     }
 
-    const person = {
+    const person = new Person({
         name: body.name,
-        number: body.number ,
-        id: generateId(),
-    }
+        number: body.number
+    })
 
-    persons = persons.concat(person)
-
-    response.json(person)
+    person.save().then(savePerson => {
+        response.json(savePerson)
+    })
 })
 
 

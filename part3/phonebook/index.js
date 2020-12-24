@@ -6,6 +6,7 @@ const app = express()
 
 app.use(express.static('build'))
 
+
 const morgan = require('morgan');
 
 morgan.token('json', function (req) { return JSON.stringify(req.body)})

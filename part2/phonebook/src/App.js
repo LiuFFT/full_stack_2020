@@ -41,17 +41,17 @@ const App = () => {
     const handleDeletePerson = (event) => {
         const pid = event.target.dataset.id
         // console.log("id:",pid)
-        const id = parseFloat(pid)
-        // console.log(id)
+        // const id = parseFloat(pid)p
+        console.log(pid)
 
-        const person = persons.find(p => p.id===id);
+        const person = persons.find(p => p.id===pid);
         // const person =
 
         console.log("person:", person)
 
         const result = window.confirm(`Delete ${person.name}?`)
         if (result){
-            deletePerson(id)
+            deletePerson(pid)
             // alert(`${person.name} is deleted`)
             setErrorMessage(
                 `${person.name} is deleted`

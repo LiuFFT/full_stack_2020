@@ -1,23 +1,24 @@
-// import http from 'http'
-
-
+// express
 const express = require('express')
 const app = express()
+app.use(express.json())
 
 //front end deployed
 app.use(express.static('build'))
 
+
+
+//morgan
 const morgan = require('morgan');
-
 morgan.token('json', function (req) { return JSON.stringify(req.body)})
-
 // app.use(morgan('tiny'))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :json'))
 
+
+//cors
 const cors = require('cors')
 app.use(cors())
 
-app.use(express.json())
 
 let persons = [
     {

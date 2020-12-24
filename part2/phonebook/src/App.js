@@ -126,13 +126,13 @@ const App = () => {
 
 
     return (
-        <div>
-            <h2>Phonebook</h2>
+        <div style={{margin:20}}>
+            <h1>Phonebook</h1>
             <Notification message={errorMessage}/>
             <Filter value={filter} handleFilterChange={handleFilterChange}/>
-            <h2> add a new</h2>
+            <h1> add a new</h1>
             <PersonForm newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handlePhoneChange={handlePhoneChange} addPerson={addPerson}/>
-            <h2>Numbers</h2>
+            <h1>Numbers</h1>
             <Number filterPerson={filterPerson} handleDeletePerson={(event)=>handleDeletePerson(event)}/>
         </div>
     )

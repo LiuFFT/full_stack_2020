@@ -4,8 +4,8 @@
 const express = require('express')
 const app = express()
 
+//front end deployed
 app.use(express.static('build'))
-
 
 const morgan = require('morgan');
 

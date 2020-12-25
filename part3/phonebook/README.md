@@ -8,7 +8,7 @@ Solutions for exercises of part 3.
 
 URL for heroku apps.
 
-### Deployment For exercises 3-10
+### Deployment For exercises 3-10 — exercises 3.11
 
 https://fso-3-10.herokuapp.com/
 

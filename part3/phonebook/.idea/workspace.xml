@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e28a4159-031e-4572-b2bc-745c0ace5473" name="Default Changelist" comment="" />
+    <list default="true" id="e28a4159-031e-4572-b2bc-745c0ace5473" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,7 +49,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1608713270945</updated>
-      <workItem from="1608713272338" duration="17731000" />
+      <workItem from="1608713272338" duration="17874000" />
+      <workItem from="1608864286574" duration="839000" />
     </task>
     <servers />
   </component>
@@ -60,9 +63,9 @@
     </ignored-roots>
   </component>
   <component name="WindowStateProjectService">
-    <state x="269" y="119" key="SettingsEditor" timestamp="1608861689410">
+    <state x="269" y="119" key="SettingsEditor" timestamp="1608864249707">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="269" y="119" key="SettingsEditor/0.0.1536.960@0.0.1536.960" timestamp="1608861689410" />
+    <state x="269" y="119" key="SettingsEditor/0.0.1536.960@0.0.1536.960" timestamp="1608864249707" />
   </component>
 </project>

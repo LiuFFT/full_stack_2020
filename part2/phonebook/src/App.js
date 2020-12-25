@@ -106,13 +106,21 @@ const App = () => {
                     setPersons(persons.concat(returnedPersons))
                     setNewName('')
                     setNewNumber('')
+
+                    setErrorMessage(
+                        `Added ${personObj.name}`
+                    )
+                    setTimeout(() => {
+                        setErrorMessage(null)
+                    }, 5000)
                 })
-            setErrorMessage(
-                `Added ${personObj.name}`
-            )
-            setTimeout(() => {
-                setErrorMessage(null)
-            }, 5000)
+                .catch(error=>{
+                    setErrorMessage(error.response.data.error)
+                    setTimeout(() => {
+                        setErrorMessage(null)
+                    }, 5000)
+                    console.log(error.response.data.error)
+                })
         }
     }
 

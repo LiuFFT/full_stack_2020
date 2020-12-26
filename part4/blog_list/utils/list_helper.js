@@ -40,9 +40,44 @@ const mostBlogs = (blogs) => {
     return mostBlogsByAuthor
 }
 
+const mostLikes = (blogs) => {
+    if (blogs.length === 0){
+        return null
+    }
+
+    const blogsOfAuthor = _.chain(_.groupBy(blogs,'author'))
+        .toPairs()
+        .value()
+
+    const likesByAuthor = blogsOfAuthor.map(
+        ([author, blogs]) => ({
+            author,
+            likes: blogs.map(blog => {
+                if (blog.author === author){
+                    return blog.likes
+                }
+            }).reduce((accumulator, currentValue) => accumulator + currentValue)
+
+        })
+    )
+
+    const maxLikes = Math.max.apply(null, likesByAuthor.map(like => like.likes))
+
+    const result = likesByAuthor.find(item => {
+        if (item.likes === maxLikes){
+            return item
+        }
+    })
+
+    return result
+
+
+}
+
 module.exports = {
     dummy,
     totalLikes,
     favoriteBlog,
-    mostBlogs
+    mostBlogs,
+    mostLikes
 }

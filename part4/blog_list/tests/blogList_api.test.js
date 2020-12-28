@@ -29,6 +29,30 @@ describe('blogs list tests', () => {
         expect(response.body[0].id).toBeDefined()
     })
 
+
+})
+
+describe('add a new blog', ()=>{
+
+    test('test add a blog', async () => {
+        const newBlog = {
+            title: "test",
+            author: "lzk",
+            url: "https://testblog.test/",
+            likes: 7,
+        }
+
+        await api
+            .post('/api/blogs')
+            .send(newBlog)
+            .expect(200)
+
+        const blogsAtEnd = await helper.blogsInDb()
+        expect(blogsAtEnd.length).toBe(helper.initialBlogs.length+1)
+
+        const urls = blogsAtEnd.map(b => b.url)
+        expect(urls).toContain("https://testblog.test/")
+    })
 })
 
 

@@ -53,6 +53,71 @@ describe('add a new blog', ()=>{
         const urls = blogsAtEnd.map(b => b.url)
         expect(urls).toContain("https://testblog.test/")
     })
+
+    test('addition without likes, default should be 0', async ()=>{
+        const newBlog = {
+            title: "test",
+            author: "lzk",
+            url: "https://testblog.test/",
+        }
+
+        await api
+            .post('/api/blogs')
+            .send(newBlog)
+            .expect(200)
+            .expect('Content-Type', /application\/json/)
+
+        const blogsAtEnd = await helper.blogsInDb()
+        const added = blogsAtEnd.find(b => {
+            if (b.url === newBlog.url){
+                return b
+            }
+        })
+
+        console.log(added)
+
+        expect(added.likes).toBe(0)
+
+    })
+
+    test('url or/and title missing',async () => {
+        let newBlog = {
+            author: "lzk",
+            url: "https://testblog.test/",
+            likes: 10
+        }
+
+        await api
+            .post('/api/blogs')
+            .send(newBlog)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+
+        newBlog = {
+            title: "test",
+            author: "lzk",
+            likes: 10
+        }
+
+        await api
+            .post('/api/blogs')
+            .send(newBlog)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+
+        newBlog = {
+            author: "lzk",
+            likes: 7,
+        }
+
+        await api
+            .post('/api/blogs')
+            .send(newBlog)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+
+
+    })
 })
 
 

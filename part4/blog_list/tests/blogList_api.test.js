@@ -15,7 +15,7 @@ beforeEach(async () => {
     await Promise.all(promiseArray)
 })
 
-describe('blogs list tests', () => {
+describe('When there are initially some blogs saved', () => {
 
     test('blogs number is correct', async () => {
         const response = await api.get('/api/blogs')
@@ -32,7 +32,7 @@ describe('blogs list tests', () => {
 
 })
 
-describe('add a new blog', ()=>{
+describe('Add a new blog', ()=>{
 
     test('test add a blog', async () => {
         const newBlog = {
@@ -120,6 +120,26 @@ describe('add a new blog', ()=>{
     })
 })
 
+
+describe('Delete a blog', ()=>{
+    test('delete a blog, if succeed, return 204', async ()=>{
+        const blogAtStart = await helper.blogsInDb()
+        const blogToDelete = blogAtStart[0]
+
+        await api
+            .delete(`/api/blogs/${blogToDelete.id}`)
+            .expect(204)
+
+        const blogAtEnd = await helper.blogsInDb()
+
+        expect(blogAtEnd.length).toBe(helper.initialBlogs.length-1)
+
+        const urls = blogAtEnd.map(b => b.url)
+
+        expect(urls).not.toContain(blogToDelete.url)
+
+    })
+})
 
 afterAll(() => {
     mongoose.connection.close()

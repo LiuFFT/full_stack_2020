@@ -23,6 +23,12 @@ describe('blogs list tests', () => {
         expect(response.body.length).toBe(helper.initialBlogs.length)
     })
 
+    test('id is defined', async () => {
+        const response = await api.get('/api/blogs')
+
+        expect(response.body[0].id).toBeDefined()
+    })
+
 })
 
 

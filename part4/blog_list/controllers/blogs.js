@@ -11,51 +11,49 @@ blogRouter.get('/', async (request, response) => {
 })
 
 
-blogRouter.post('/', async (request, response,next) => {
+blogRouter.post('/', async (request, response) => {
     const body = request.body
 
     console.log("token:",request.token)
-
-    try{
-        const decodedToken = jwt.verify(request.token, process.env.SECRET)
-        if (!request.token || !decodedToken.id) {
-            return response.status(401).json({ error: 'token missing or invalid' })
-        }
-        const user = await User.findById(decodedToken.id)
-
-        const blog = new Blog({
-            title: body.title,
-            author: body.author,
-            url: body.url,
-            likes: body.likes,
-            user: user._id
-        })
-
-        if (!blog.url && !blog.title){
-            return response.status(400).send({ error: 'url and title are missing'})
-        }
-
-        if (!blog.url && blog.title) {
-            return response.status(400).send({ error: 'url is missing'})
-        }
-
-        if (!blog.title && blog.url){
-            return response.status(400).send({ error: 'title is missing'})
-        }
-
-        if (!blog.likes) {
-            blog.likes = 0
-        }
-
-        const saveBlog = await blog.save()
-        user.blogs = user.blogs.concat(saveBlog._id)
-        await user.save()
-
-
-        response.json(saveBlog.toJSON())
-    }catch (e) {
-        next(e)
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+    if (!request.token || !decodedToken.id) {
+        return response.status(401).json({ error: 'token missing or invalid' })
     }
+    const user = await User.findById(decodedToken.id)
+
+    console.log(user)
+
+    const blog = new Blog({
+        title: body.title,
+        author: body.author,
+        url: body.url,
+        likes: body.likes,
+        user: user._id
+    })
+
+    if (!blog.url && !blog.title){
+        return response.status(400).send({ error: 'url and title are missing'})
+    }
+
+    if (!blog.url && blog.title) {
+        return response.status(400).send({ error: 'url is missing'})
+    }
+
+    if (!blog.title && blog.url){
+        return response.status(400).send({ error: 'title is missing'})
+    }
+
+    if (!blog.likes) {
+        blog.likes = 0
+    }
+
+    const saveBlog = await blog.save()
+    user.blogs = user.blogs.concat(saveBlog._id)
+    await user.save()
+
+
+    response.json(saveBlog.toJSON())
+
 })
 
 

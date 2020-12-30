@@ -8,6 +8,8 @@ const api = supertest(app)
 const Blog = require('../models/blog')
 const User = require('../models/user')
 
+// jest.setTimeout(60000);
+
 beforeEach(async () => {
     await Blog.deleteMany({})
 
@@ -232,6 +234,32 @@ describe('when there is initially one user at db', () => {
         const usersAtEnd = await helper.usersInDb()
         expect(usersAtEnd.length).toBe(usersAtStart.length)
     })
+})
+
+describe('Add a new blog with token', ()=>{
+
+    test('test add a blog with token', async () => {
+        const newBlog = {
+            title: "if it works",
+            author: "works",
+            url: "https://www.testblog.test.com/",
+            likes: 10,
+        }
+
+        await api
+            .post('/api/blogs')
+            .set({"Authorization":'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjVmZTk5NTYyMDI5NDI1MTc2NDMyN2U3NyIsImlhdCI6MTYwOTIwNTcwMX0.UtUSj5tLd63_DzpQYdq83VpHmhRTQUXsWzXVfO3zSMQ'})
+            .set("Content-Type", "application/json")
+            .send(newBlog)
+            .expect(200)
+
+        const blogsAtEnd = await helper.blogsInDb()
+        expect(blogsAtEnd.length).toBe(helper.initialBlogs.length+1)
+
+        const urls = blogsAtEnd.map(b => b.url)
+        expect(urls).toContain("https://testblog.test/")
+    })
+
 })
 
 afterAll(() => {

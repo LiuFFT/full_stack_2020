@@ -3,6 +3,7 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from "./components/Notification";
+import Button from "./components/Button";
 
 const App = () => {
     const [blogs, setBlogs] = useState([])
@@ -17,6 +18,14 @@ const App = () => {
       )
     }, [])
 
+    useEffect(() => {
+        const loggedUserJSON = window.localStorage.getItem('loggedBlogsAppUser')
+        if (loggedUserJSON) {
+            const user = JSON.parse(loggedUserJSON)
+            setUser(user)
+        }
+    }, [])
+
     const handleLogin = async (event) => {
         event.preventDefault()
 
@@ -24,6 +33,9 @@ const App = () => {
             const user = await loginService.login({
                 username, password,
             })
+            window.localStorage.setItem(
+                'loggedBlogsAppUser', JSON.stringify(user)
+            )
             setUser(user)
             setUsername('')
             setPassword('')
@@ -72,6 +84,11 @@ const App = () => {
         </div>
     )
 
+    const handleLogout = (event) => {
+        window.localStorage.clear()
+        setUser(null)
+    }
+
     return (
       <div style={{margin:20}}>
           <Notification message={errorMessage}/>
@@ -80,7 +97,7 @@ const App = () => {
                   {user === null ?
                       loginForm() :
                       <div>
-                          <p>{user.name} logged-in</p>
+                          <p>{user.name} logged-in <Button text="logout" onClick={(event)=>handleLogout(event)} /></p>
                           {blogsForm()}
                       </div>
                   }

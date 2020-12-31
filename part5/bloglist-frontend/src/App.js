@@ -37,6 +37,7 @@ const App = () => {
             const user = await loginService.login({
                 username, password,
             })
+
             window.localStorage.setItem(
                 'loggedBlogsAppUser', JSON.stringify(user)
             )
@@ -45,7 +46,7 @@ const App = () => {
             setUsername('')
             setPassword('')
         } catch (exception) {
-            setErrorMessage('Wrong credentials')
+            setErrorMessage('Wrong username or password')
             setTimeout(() => {
                 setErrorMessage(null)
             }, 5000)
@@ -71,6 +72,13 @@ const App = () => {
             .then(returnedBlog => {
                 setBlogs(blogs.concat(returnedBlog))
             })
+
+        setErrorMessage(
+            `a new blog ${blogObj.title} by ${blogObj.author} added`
+        )
+        setTimeout(() => {
+            setErrorMessage(null)
+        }, 5000)
     }
 
 

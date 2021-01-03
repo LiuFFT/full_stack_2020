@@ -74,6 +74,23 @@ const App = () => {
         }, 5000)
     }
 
+    const handleUpdateBlog = (blogObj) => {
+        console.log(blogObj)
+        blogService
+            .update(blogObj)
+            .then(returnedBlog => {
+                setBlogs(blogs.map(b => b.id !== blogs.id ? b : returnedBlog))
+            })
+            .catch(error => {
+                setErrorMessage(
+                    `Blog '${blogObj.title}' was already removed from server`
+                )
+                setTimeout(() => {
+                    setErrorMessage(null)
+                }, 5000)
+            })
+    }
+
 
     const loginForm = () => (
         <div>
@@ -106,7 +123,7 @@ const App = () => {
         <div>
             <h2>blogs</h2>
             {blogs.map(blog =>
-                <Blog key={blog.id} blog={blog} />
+                <Blog key={blog.id} blog={blog} updateBlog={handleUpdateBlog} />
             )}
         </div>
     )

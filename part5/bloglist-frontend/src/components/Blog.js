@@ -1,6 +1,7 @@
 import React, { useState} from 'react'
 import Button from "./Button";
 // import userServices from "../services/users"
+import blogServices from "../services/blogs"
 
 // const getUser = (user) => {
 //     userServices.getById(user)
@@ -10,7 +11,7 @@ import Button from "./Button";
 //         })
 // }
 
-const BlogDetail = ({blog, updateBlogLikes}) => {
+const BlogDetail = ({blogs, blog, updateBlogLikes, user, handleDelete}) => {
     // const [blogOwner, setBlogOwner] = useState(null)
     //
     // useEffect(()=>{
@@ -39,17 +40,22 @@ const BlogDetail = ({blog, updateBlogLikes}) => {
             {blog.url}<br/>
             likes {blog.likes} <Button text="like" onClick={updateBlogLikes}/><br/>
             {blog.user.name}<br/>
+            {user !== null && user.name === blog.user.name &&
+                <div> <Button text="delete" onClick={()=>handleDelete(blog.id)}/> </div>
+            }
         </div>
     )
 }
 
 
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({blogs, setBlogs, blog, updateBlog , user}) => {
+    const [visible, setVisible] = useState(false)
 
-    const [show, setShow] = useState(false)
+    const hideWhenVisible = { display: visible ? 'none' : '' }
+    const showWhenVisible = { display: visible ? '' : 'none' }
 
-    const handleClick = () =>{
-        setShow(!show)
+    const toggleVisibility = () => {
+        setVisible(!visible)
     }
 
 
@@ -64,11 +70,22 @@ const Blog = ({ blog, updateBlog }) => {
         })
     }
 
+    const handleDelete = (id) => {
+        const blogToDelete = blogs.find(b => b.id === id)
+        if (window.confirm(`Remove blog '${blogToDelete.title}' by '${blogToDelete.author}'?`)) {
+            blogServices
+                .deleteBlog(id)
+                .then(()=>{
+                    setBlogs(blogs.filter(p => p.id !== id).sort((a, b) => b.likes - a.likes))
+                })
+        }
+    }
+
     return (
         <div>
-            {blog.title}, {blog.author} <Button onClick={handleClick} text="show"/>
+            {blog.title}, {blog.author} <button style={hideWhenVisible} onClick={toggleVisibility}>View</button> <button style={showWhenVisible} onClick={toggleVisibility}>Hide</button>
             <div>
-                {show ? <BlogDetail blog={blog}  updateBlogLikes={updateBlogLikes}/> : ''}
+                {visible ? <BlogDetail blog={blog} blogs={blogs}  user={user} handleDelete={handleDelete} updateBlogLikes={updateBlogLikes}/> : ''}
             </div>
         </div>
     )

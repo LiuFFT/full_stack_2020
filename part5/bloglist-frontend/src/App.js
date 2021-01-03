@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from "./components/Notification";
 import Button from "./components/Button";
 import NewBlogForm from "./components/NewBlogForm";
 import Togglable from "./components/Togglable";
+import Blogs from "./components/Blogs";
 
 const App = () => {
     const [blogs, setBlogs] = useState([])
@@ -125,12 +125,7 @@ const App = () => {
     )
 
     const blogsForm = () => (
-        <div>
-            <h2>blogs</h2>
-            {blogs.map(blog =>
-                <Blog key={blog.id} blog={blog} updateBlog={handleUpdateBlog} />
-            )}
-        </div>
+        <Blogs user={user} blogs={blogs} setBlogs={setBlogs} handleUpdateBlog={handleUpdateBlog}/>
     )
 
     const newBlogForm = () => (

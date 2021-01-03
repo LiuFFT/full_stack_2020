@@ -75,11 +75,14 @@ const App = () => {
     }
 
     const handleUpdateBlog = (blogObj) => {
-        console.log(blogObj)
+        const blogLiked = blogs.find(b => b.id === blogObj.id)
         blogService
             .update(blogObj)
             .then(returnedBlog => {
-                setBlogs(blogs.map(b => b.id !== blogs.id ? b : returnedBlog))
+                let newBlogs = [...blogs]
+                newBlogs[blogs.indexOf(blogLiked)] = returnedBlog
+                // setBlogs(newBlogs.map(b => b.id !== newBlogs.id ? b : returnedBlog))
+                setBlogs(newBlogs)
             })
             .catch(error => {
                 setErrorMessage(

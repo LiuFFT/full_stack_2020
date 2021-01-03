@@ -1,35 +1,44 @@
-import React,{useState} from 'react'
+import React, { useState} from 'react'
 import Button from "./Button";
-import userServices from "../services/users"
+// import userServices from "../services/users"
 
-const getUser = async (user) => {
-    if (typeof(user) ==='object'){
-        userServices.getById(user.id)
-            .then(returnedUser=>{
-                return returnedUser
-            })
-    }else if (typeof(user) === 'string'){
-        userServices.getById(user)
-            .then(returnedUser=>{
-                return returnedUser
-            })
-    }
-}
+// const getUser = (user) => {
+//     userServices.getById(user)
+//         .then(returnedUser=>{
+//             console.log("returnedUser:",returnedUser)
+//             return returnedUser
+//         })
+// }
 
 const BlogDetail = ({blog, updateBlogLikes}) => {
-    let userObj = blog.user
+    // const [blogOwner, setBlogOwner] = useState(null)
+    //
+    // useEffect(()=>{
+    //     userServices.getById(blog.user.id)
+    //         .then(returnedUser=>{
+    //             console.log("returnedUser:",returnedUser)
+    //             setBlogOwner(returnedUser)
+    //         })
+    // })
 
-    console.log(blog.user.name)
-    if (blog.user.name === "undefined"){
-        userObj = getUser(blog.user)
-        console.log(userObj)
-    }
+    // let userObj = blog.user
+    //
+    // console.log("blog:",blog)
+    // if (!blog.user.name) {
+    //     console.log("blog.user:",blog.user)
+    //     userServices.getById(blog.user)
+    //         .then(returnedUser=>{
+    //             console.log("returnedUser:",returnedUser)
+    //             userObj = returnedUser
+    //         })
+    //     console.log("userObj:",userObj)
+    // }
 
     return (
         <div>
             {blog.url}<br/>
             likes {blog.likes} <Button text="like" onClick={updateBlogLikes}/><br/>
-            {userObj.name || null}<br/>
+            {blog.user.name}<br/>
         </div>
     )
 }

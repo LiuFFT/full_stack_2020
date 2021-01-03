@@ -15,9 +15,11 @@ const App = () => {
 
     const [user, setUser] = useState(null)
 
+
+
     useEffect(() => {
       blogService.getAll().then(blogs =>
-        setBlogs( blogs )
+        setBlogs( blogs.sort((a, b) => b.likes - a.likes) )
       )
     }, [])
 
@@ -62,7 +64,7 @@ const App = () => {
         blogService
             .create(blogObj)
             .then(returnedBlog => {
-                setBlogs(blogs.concat(returnedBlog))
+                setBlogs(blogs.concat(returnedBlog).sort((a, b) => b.likes - a.likes))
             })
 
 
@@ -82,7 +84,7 @@ const App = () => {
                 let newBlogs = [...blogs]
                 newBlogs[blogs.indexOf(blogLiked)] = returnedBlog
                 // setBlogs(newBlogs.map(b => b.id !== newBlogs.id ? b : returnedBlog))
-                setBlogs(newBlogs)
+                setBlogs(newBlogs.sort((a, b) => b.likes - a.likes))
             })
             .catch(error => {
                 setErrorMessage(

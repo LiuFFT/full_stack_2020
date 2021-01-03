@@ -1,7 +1,7 @@
-import React, { useState} from 'react'
-import Button from "./Button";
+import React, { useState } from 'react'
+import Button from './Button'
 // import userServices from "../services/users"
-import blogServices from "../services/blogs"
+import blogServices from '../services/blogs'
 
 // const getUser = (user) => {
 //     userServices.getById(user)
@@ -11,7 +11,8 @@ import blogServices from "../services/blogs"
 //         })
 // }
 
-const BlogDetail = ({blogs, blog, updateBlogLikes, user, handleDelete}) => {
+// eslint-disable-next-line no-unused-vars
+const BlogDetail = ({ blogs, blog, updateBlogLikes, user, handleDelete }) => {
     // const [blogOwner, setBlogOwner] = useState(null)
     //
     // useEffect(()=>{
@@ -41,14 +42,14 @@ const BlogDetail = ({blogs, blog, updateBlogLikes, user, handleDelete}) => {
             likes {blog.likes} <Button text="like" onClick={updateBlogLikes}/><br/>
             {blog.user.name}<br/>
             {user !== null && user.name === blog.user.name &&
-                <div> <Button text="delete" onClick={()=>handleDelete(blog.id)}/> </div>
+                <div> <Button text="delete" onClick={() => handleDelete(blog.id)}/> </div>
             }
         </div>
     )
 }
 
 
-const Blog = ({blogs, setBlogs, blog, updateBlog , user}) => {
+const Blog = ({ blogs, setBlogs, blog, updateBlog , user }) => {
     const [visible, setVisible] = useState(false)
 
     const hideWhenVisible = { display: visible ? 'none' : '' }
@@ -75,7 +76,7 @@ const Blog = ({blogs, setBlogs, blog, updateBlog , user}) => {
         if (window.confirm(`Remove blog '${blogToDelete.title}' by '${blogToDelete.author}'?`)) {
             blogServices
                 .deleteBlog(id)
-                .then(()=>{
+                .then(() => {
                     setBlogs(blogs.filter(p => p.id !== id).sort((a, b) => b.likes - a.likes))
                 })
         }

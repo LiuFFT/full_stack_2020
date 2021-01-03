@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
-const LoginForm = ({handleSubmit}) => {
+const LoginForm = ({ handleSubmit }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 

@@ -1,7 +1,7 @@
 import React from 'react'
-import Blog from "./Blog";
+import Blog from './Blog'
 
-const Blogs = ({blogs, setBlogs, handleUpdateBlog, user}) => {
+const Blogs = ({ blogs, setBlogs, handleUpdateBlog, user }) => {
 
 
 

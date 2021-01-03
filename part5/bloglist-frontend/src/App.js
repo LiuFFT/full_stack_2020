@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import blogService from './services/blogs'
 import loginService from './services/login'
-import Notification from "./components/Notification";
-import Button from "./components/Button";
-import NewBlogForm from "./components/NewBlogForm";
-import Togglable from "./components/Togglable";
-import Blogs from "./components/Blogs";
+import Notification from './components/Notification'
+import Button from './components/Button'
+import NewBlogForm from './components/NewBlogForm'
+import Togglable from './components/Togglable'
+import Blogs from './components/Blogs'
 
 const App = () => {
     const [blogs, setBlogs] = useState([])
@@ -18,9 +18,9 @@ const App = () => {
 
 
     useEffect(() => {
-      blogService.getAll().then(blogs =>
-        setBlogs( blogs.sort((a, b) => b.likes - a.likes) )
-      )
+        blogService.getAll().then(blogs =>
+            setBlogs( blogs.sort((a, b) => b.likes - a.likes) )
+        )
     }, [])
 
     useEffect(() => {
@@ -55,6 +55,7 @@ const App = () => {
         }
     }
 
+    // eslint-disable-next-line no-unused-vars
     const handleLogout = (event) => {
         window.localStorage.clear()
         setUser(null)
@@ -86,6 +87,7 @@ const App = () => {
                 // setBlogs(newBlogs.map(b => b.id !== newBlogs.id ? b : returnedBlog))
                 setBlogs(newBlogs.sort((a, b) => b.likes - a.likes))
             })
+            // eslint-disable-next-line no-unused-vars
             .catch(error => {
                 setErrorMessage(
                     `Blog '${blogObj.title}' was already removed from server`
@@ -138,21 +140,21 @@ const App = () => {
 
 
     return (
-      <div style={{margin:20}}>
-          <Notification message={errorMessage}/>
-          <div>
-              <div>
-                  {user === null ?
-                      loginForm() :
-                      <div>
-                          <p>{user.name} logged-in <Button text="logout" onClick={(event)=>handleLogout(event)} /></p>
-                          {newBlogForm()}
-                          {blogsForm()}
-                      </div>
-                  }
-              </div>
-          </div>
-      </div>
+        <div style={{ margin:20 }}>
+            <Notification message={errorMessage}/>
+            <div>
+                <div>
+                    {user === null ?
+                        loginForm() :
+                        <div>
+                            <p>{user.name} logged-in <Button text="logout" onClick={(event) => handleLogout(event)} /></p>
+                            {newBlogForm()}
+                            {blogsForm()}
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     )
 }
 

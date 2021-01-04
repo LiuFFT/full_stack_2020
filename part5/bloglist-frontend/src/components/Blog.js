@@ -12,7 +12,7 @@ import blogServices from '../services/blogs'
 // }
 
 // eslint-disable-next-line no-unused-vars
-const BlogDetail = ({ blogs, blog, updateBlogLikes, user, handleDelete }) => {
+const BlogDetail = ({ blog, updateBlogLikes, user, handleDelete }) => {
     // const [blogOwner, setBlogOwner] = useState(null)
     //
     // useEffect(()=>{
@@ -84,9 +84,11 @@ const Blog = ({ blogs, setBlogs, blog, updateBlog , user }) => {
 
     return (
         <div>
-            {blog.title}, {blog.author} <button style={hideWhenVisible} onClick={toggleVisibility}>View</button> <button style={showWhenVisible} onClick={toggleVisibility}>Hide</button>
+            <div className='blogBasic'>
+                {blog.title}, {blog.author} <button style={hideWhenVisible} onClick={toggleVisibility}>View</button> <button style={showWhenVisible} onClick={toggleVisibility}>Hide</button>
+            </div>
             <div>
-                {visible ? <BlogDetail blog={blog} blogs={blogs}  user={user} handleDelete={handleDelete} updateBlogLikes={updateBlogLikes}/> : ''}
+                {visible ? <BlogDetail blog={blog}  user={user} handleDelete={handleDelete} updateBlogLikes={updateBlogLikes}/> : ''}
             </div>
         </div>
     )

@@ -51,7 +51,7 @@ describe('test login show', function () {
         })
     })
 
-    describe.only('When blog is created', function() {
+    describe('When blog is created', function() {
         beforeEach(function() {
             cy.login({ username: 'root', password: 'root' })
             cy.createBlog({
@@ -67,6 +67,27 @@ describe('test login show', function () {
             cy.contains('likes 6')
             cy.contains('like').click()
             cy.contains('likes 7')
+        })
+
+        it('A blog can be deleted by its owner', function() {
+            cy.contains('delete')
+            cy.contains('delete').click()
+            cy.should('not.contain', 'www.test.url')
+        })
+
+        it.only('A blog can not be deleted by others', function() {
+            const user = {
+                name: 'test',
+                username: 'test',
+                password: 'test'
+            }
+            cy.request('POST', 'http://localhost:3001/api/users/', user)
+            cy.visit('http://localhost:3000')
+            cy.login({ username: 'test', password: 'test' })
+
+            cy.contains('View').click()
+
+            cy.should('not.contain', 'delete')
         })
     })
 

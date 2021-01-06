@@ -27,7 +27,22 @@ describe('test login show', function () {
         })
 
         it('fails with wrong credentials', function() {
+            cy.get('input:first').type('root')
+            cy.get('input:last').type('wrong')
+            cy.contains('login').click()
+
+            cy.contains('Wrong username or password')
+        })
+    })
+
+    describe.only('When logged in', function() {
+        beforeEach(function() {
+            cy.login({ username: 'root', password: 'root' })
+        })
+
+        it('A blog can be created', function() {
             // ...
         })
     })
+
 })

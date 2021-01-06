@@ -2,7 +2,8 @@ import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { fireEvent, render } from '@testing-library/react'
 import Blog from './Blog'
-// import { prettyDOM } from '@testing-library/dom'
+// eslint-disable-next-line no-unused-vars
+import { prettyDOM } from '@testing-library/dom'
 
 const user = {
     id:'5fe995620294251764327e77',
@@ -26,13 +27,14 @@ const blog = {
     }
 }
 
+// eslint-disable-next-line no-unused-vars
 const blogs = [
     blog
 ]
 
 test('test render the title and author', () => {
     const component = render(
-        <Blog blogs={blogs} blog={blog} user={user}/>
+        <Blog blog={blog} user={user}/>
     )
 
     const div = component.container.querySelector('.blogBasic')
@@ -42,7 +44,7 @@ test('test render the title and author', () => {
 
 test('test render url and likes', async () => {
     const component = render(
-        <Blog blogs={blogs} blog={blog} user={user}/>
+        <Blog blog={blog} user={user}/>
     )
 
     const button = component.getByText('View')
@@ -54,3 +56,20 @@ test('test render url and likes', async () => {
     expect(compDiv).toHaveTextContent(blog.url)
     expect(compDiv).toHaveTextContent(blog.likes)
 })
+
+test('test click twice', async () => {
+    const mockHandler = jest.fn()
+
+    const component = render(
+        <Blog blog={blog} user={user} handleUpdateBlog={mockHandler}/>
+    )
+
+    const view = component.getByText('View')
+    fireEvent.click(view)
+    fireEvent.click(component.getByText('like'))
+    fireEvent.click(component.getByText('like'))
+
+
+    expect(mockHandler.mock.calls).toHaveLength(2)
+})
+

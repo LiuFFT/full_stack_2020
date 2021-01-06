@@ -104,6 +104,6 @@ test('test create new blog', async () => {
     expect(createBlog.mock.calls[0][0].title).toBe('test create new blog' )
     expect(createBlog.mock.calls[0][0].author).toBe('lzk' )
     expect(createBlog.mock.calls[0][0].url).toBe('www.create.blog' )
-    
+
 })
 

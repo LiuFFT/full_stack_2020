@@ -8,6 +8,7 @@ describe('test login show', function () {
         }
         cy.request('POST', 'http://localhost:3001/api/users/', user)
         cy.visit('http://localhost:3000')
+        cy.login({ username: 'root', password: 'root' })
     })
 
     it('test if login form shows', function () {
@@ -41,7 +42,12 @@ describe('test login show', function () {
         })
 
         it('A blog can be created', function() {
-            // ...
+            cy.contains('Create').click()
+            cy.get('#title').type('Title')
+            cy.get('#author').type('Author')
+            cy.get('#url').type('url')
+            cy.get('#create-button').click()
+            cy.contains('a new blog Title by Author added')
         })
     })
 

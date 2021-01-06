@@ -1,7 +1,7 @@
 import React from 'react'
 import Blog from './Blog'
 
-const Blogs = ({ blogs, setBlogs, handleUpdateBlog, user }) => {
+const Blogs = ({ blogs, handleUpdateBlog,handleDelete, user }) => {
 
 
 
@@ -9,7 +9,7 @@ const Blogs = ({ blogs, setBlogs, handleUpdateBlog, user }) => {
         <div>
             <h2>blogs</h2>
             {blogs.map(blog =>
-                <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs} updateBlog={handleUpdateBlog} user={user}/>
+                <Blog key={blog.id} blog={blog} handleUpdateBlog={handleUpdateBlog} handleDelete={handleDelete} user={user}/>
             )}
         </div>
     )

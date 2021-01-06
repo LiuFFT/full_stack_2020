@@ -6,6 +6,7 @@ import Button from './components/Button'
 import NewBlogForm from './components/NewBlogForm'
 import Togglable from './components/Togglable'
 import Blogs from './components/Blogs'
+import blogServices from "./services/blogs";
 
 const App = () => {
     const [blogs, setBlogs] = useState([])
@@ -77,25 +78,29 @@ const App = () => {
         }, 5000)
     }
 
-    const handleUpdateBlog = (blogObj) => {
-        const blogLiked = blogs.find(b => b.id === blogObj.id)
-        blogService
-            .update(blogObj)
-            .then(returnedBlog => {
-                let newBlogs = [...blogs]
-                newBlogs[blogs.indexOf(blogLiked)] = returnedBlog
-                // setBlogs(newBlogs.map(b => b.id !== newBlogs.id ? b : returnedBlog))
-                setBlogs(newBlogs.sort((a, b) => b.likes - a.likes))
-            })
-            // eslint-disable-next-line no-unused-vars
-            .catch(error => {
-                setErrorMessage(
-                    `Blog '${blogObj.title}' was already removed from server`
-                )
-                setTimeout(() => {
-                    setErrorMessage(null)
-                }, 5000)
-            })
+    const handleUpdateBlog = async (blogObj) => {
+        const newBlogObj = { ...blogObj }
+        newBlogObj.likes = newBlogObj.likes + 1
+
+        console.log(newBlogObj)
+        await blogService.update(newBlogObj)
+
+        const newBlogs = blogs.map((b) =>
+            b.id === newBlogObj.id ? newBlogObj : b
+        )
+
+        setBlogs(newBlogs)
+    }
+
+    const handleDelete = async (id) => {
+        const blogToDelete = blogs.find(b => b.id === id)
+        if (window.confirm(`Remove blog '${blogToDelete.title}' by '${blogToDelete.author}'?`)) {
+            blogServices
+                .deleteBlog(id)
+                .then(() => {
+                    setBlogs(blogs.filter(p => p.id !== id).sort((a, b) => b.likes - a.likes))
+                })
+        }
     }
 
 
@@ -127,7 +132,7 @@ const App = () => {
     )
 
     const blogsForm = () => (
-        <Blogs user={user} blogs={blogs} setBlogs={setBlogs} handleUpdateBlog={handleUpdateBlog}/>
+        <Blogs user={user} blogs={blogs} setBlogs={setBlogs} handleUpdateBlog={handleUpdateBlog} handleDelete={handleDelete} />
     )
 
     const newBlogForm = () => (

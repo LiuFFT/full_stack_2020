@@ -36,18 +36,37 @@ describe('test login show', function () {
         })
     })
 
-    describe.only('When logged in', function() {
+    describe('When logged in', function() {
         beforeEach(function() {
             cy.login({ username: 'root', password: 'root' })
         })
 
         it('A blog can be created', function() {
             cy.contains('Create').click()
-            cy.get('#title').type('Title')
-            cy.get('#author').type('Author')
-            cy.get('#url').type('url')
+            cy.get('#title').type('test')
+            cy.get('#author').type('lzk')
+            cy.get('#url').type('www.test.com')
             cy.get('#create-button').click()
             cy.contains('a new blog Title by Author added')
+        })
+    })
+
+    describe.only('When blog is created', function() {
+        beforeEach(function() {
+            cy.login({ username: 'root', password: 'root' })
+            cy.createBlog({
+                title: 'test',
+                author: 'lzk',
+                url: 'www.test.url',
+                likes: 6,
+            })
+            cy.contains('View').click()
+        })
+
+        it('A blog can be liked by user', function() {
+            cy.contains('likes 6')
+            cy.contains('like').click()
+            cy.contains('likes 7')
         })
     })
 

@@ -16,4 +16,18 @@ describe('test login show', function () {
         cy.contains('password')
         cy.contains('login')
     })
+
+    describe('Login', function () {
+        it('succeeds with correct credentials', function() {
+            cy.get('input:first').type('root')
+            cy.get('input:last').type('root')
+            cy.contains('login').click()
+
+            cy.contains('root logged-in')
+        })
+
+        it('fails with wrong credentials', function() {
+            // ...
+        })
+    })
 })

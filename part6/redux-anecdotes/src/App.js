@@ -7,7 +7,10 @@ const App = () => {
     const dispatch = useDispatch()
 
     const vote = (id) => {
-        console.log('vote', id)
+        dispatch({
+            type: 'VOTE',
+            data: { id }
+        })
     }
 
     return (
@@ -19,7 +22,7 @@ const App = () => {
                         {anecdote.content}
                     </div>
                     <div>
-            has {anecdote.votes}
+                        has {anecdote.votes}
                         <button onClick={() => vote(anecdote.id)}>vote</button>
                     </div>
                 </div>

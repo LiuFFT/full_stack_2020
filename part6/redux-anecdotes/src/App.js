@@ -2,14 +2,29 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 const App = () => {
+    const getId = () => (100000 * Math.random()).toFixed(0)
+
     const anecdotes = useSelector(state => state)
-    // eslint-disable-next-line
     const dispatch = useDispatch()
 
     const vote = (id) => {
         dispatch({
             type: 'VOTE',
             data: { id }
+        })
+    }
+
+    const addAnecdotes = (event) => {
+        event.preventDefault()
+        const content = event.target.anecdote.value
+        event.target.anecdote.value = ''
+        dispatch({
+            type: 'ADD_ANECDOTE',
+            data: {
+                content: content,
+                id: getId(),
+                votes: 0
+            }
         })
     }
 
@@ -28,9 +43,9 @@ const App = () => {
                 </div>
             )}
             <h2>create new</h2>
-            <form>
-                <div><input /></div>
-                <button>create</button>
+            <form onSubmit={addAnecdotes}>
+                <div><input name="anecdote"/></div>
+                <button type="submit">create</button>
             </form>
         </div>
     )

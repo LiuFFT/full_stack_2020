@@ -32,6 +32,8 @@ const AnecdoteList = (props) => {
     const anecdotesSorted = [...anecdotes]
     anecdotesSorted.sort((a, b) => b.votes - a.votes)
 
+    // console.log(anecdotesSorted)
+
     const anecdotesAfterFilter = anecdotesSorted.filter(
         (a)=> a.content.toLowerCase().includes(filter.toLowerCase())
     )

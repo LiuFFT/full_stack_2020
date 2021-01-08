@@ -7,7 +7,7 @@
 //     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 // ]
 
-const getId = () => (100000 * Math.random()).toFixed(0)
+// const getId = () => (100000 * Math.random()).toFixed(0)
 
 // const asObject = (anecdote) => {
 //     return {
@@ -52,14 +52,10 @@ export const votes = (id) => {
     }
 }
 
-export const addAnecdote = (content) => {
+export const addAnecdote = (data) => {
     return {
         type: 'ADD_ANECDOTE',
-        data: {
-            content: content,
-            id: getId(),
-            votes: 0
-        }
+        data,
     }
 }
 

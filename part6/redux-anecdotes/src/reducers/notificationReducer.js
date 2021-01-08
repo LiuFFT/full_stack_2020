@@ -1,23 +1,30 @@
-const initialState = ['TEST']
-
-const notificationReducer = ((state=initialState,action)=>{
+const notificationReducer = (state=null,action)=>{
     switch (action.type) {
         case 'INIT': {
-            return initialState
+            return null
         }
         case 'NEW_NOTIFICATION':{
-            return [...state, action.data]
+            return action.data
         }
-        // case 'CLEAR_NOTIFICATION': {
-        // }
+        case 'CLEAR_NOTIFICATION': {
+            return null
+        }
         default:
             return state
     }
-})
+}
 
-export const init = () => {
-    return {
-        type: 'INIT'
+export const notification = (msg) => {
+    return  (dispatch)=>{
+        dispatch({
+            type:'NEW_NOTIFICATION',
+            data: msg
+        })
+
+        setTimeout(() => dispatch({
+                type: 'CLEAR_NOTIFICATION'
+        }), 1000 * 5)
+
     }
 }
 

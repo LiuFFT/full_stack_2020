@@ -23,10 +23,10 @@ const AnecdoteList = (props) => {
     const filter = useSelector(state => state.filter)
     const dispatch = useDispatch()
 
-    const vote =  (id) => {
-        dispatch(votes(id))
-        const a = anecdotes.find(ane => ane.id === id)
-        dispatch(notification(`You voted '${a.content}'`))
+    const vote =  async (anecdote) => {
+        dispatch(votes(anecdote))
+        // const a = anecdotes.find(ane => ane.id === id)
+        dispatch(notification(`You voted '${anecdote.content}'`))
     }
 
     const anecdotesSorted = [...anecdotes]
@@ -41,7 +41,7 @@ const AnecdoteList = (props) => {
     return (
         <div>
             {anecdotesAfterFilter.map(anecdote =>
-                <Anecdote anecdote={anecdote} key={anecdote.id} handleVote={()=>vote(anecdote.id)}/>
+                <Anecdote anecdote={anecdote} key={anecdote.id} handleVote={()=>vote(anecdote)}/>
             )}
         </div>
     )

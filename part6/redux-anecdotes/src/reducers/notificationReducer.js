@@ -14,6 +14,8 @@ const notificationReducer = (state=null,action)=>{
     }
 }
 
+
+// solve exercises 6.21
 let time
 
 export const notification = (msg,s) => {
@@ -24,7 +26,6 @@ export const notification = (msg,s) => {
             type:'NEW_NOTIFICATION',
             data: msg
         })
-
 
         time = setTimeout(() => dispatch({
                 type: 'CLEAR_NOTIFICATION'

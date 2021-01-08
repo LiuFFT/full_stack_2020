@@ -13,7 +13,7 @@ const AnecdoteForm = (props) => {
         // const newAnecdote = await anecdoteService.createNew(content)
         // dispatch(addAnecdote(newAnecdote))
         dispatch(addAnecdote(content))
-        dispatch(notification(`'${content}' added.`))
+        dispatch(notification(`'${content}' added.`,5))
     }
 
     return (

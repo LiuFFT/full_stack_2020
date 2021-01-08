@@ -26,7 +26,7 @@ const AnecdoteList = (props) => {
     const vote =  async (anecdote) => {
         dispatch(votes(anecdote))
         // const a = anecdotes.find(ane => ane.id === id)
-        dispatch(notification(`You voted '${anecdote.content}'`))
+        dispatch(notification(`You voted '${anecdote.content}'`,5))
     }
 
     const anecdotesSorted = [...anecdotes]

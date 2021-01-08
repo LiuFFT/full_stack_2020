@@ -20,6 +20,7 @@ const Anecdote = ({anecdote, handleVote}) => {
 
 const AnecdoteList = (props) => {
     const anecdotes = useSelector(state => state.anecdotes)
+    const filter = useSelector(state => state.filter)
     const dispatch = useDispatch()
 
     const vote =  (id) => {
@@ -31,9 +32,13 @@ const AnecdoteList = (props) => {
     const anecdotesSorted = [...anecdotes]
     anecdotesSorted.sort((a, b) => b.votes - a.votes)
 
+    const anecdotesAfterFilter = anecdotesSorted.filter(
+        (a)=> a.content.toLowerCase().includes(filter.toLowerCase())
+    )
+
     return (
         <div>
-            {anecdotesSorted.map(anecdote =>
+            {anecdotesAfterFilter.map(anecdote =>
                 <Anecdote anecdote={anecdote} key={anecdote.id} handleVote={()=>vote(anecdote.id)}/>
             )}
         </div>

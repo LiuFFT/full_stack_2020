@@ -170,8 +170,16 @@ const resolvers = {
     Query: {
         bookCount: () => Book.collection.countDocuments(),
         authorCount: () => Author.collection.countDocuments(),
-        allBooks: () => Book.find({}),
-        allAuthors: () => Author.find({}),
+        allBooks: async (root, args) => {
+            let filter = {}
+            if(args.genre){
+                filter = {genres: args.genre}
+            }
+            return Book
+                .find(filter)
+                .populate('author', {name: 1, born: 1, bookCount: 1});
+        },
+        allAuthors: async () => Author.find({}),
         me: (root, args, context) => {
             return context.currentUser
         }
@@ -198,7 +206,8 @@ const resolvers = {
                 }
             }
 
-            const book = new Book({...args, author: author._id })
+            const book = new Book({...args})
+            book.author = author
             // return book.save()
             try {
                 await book.save()

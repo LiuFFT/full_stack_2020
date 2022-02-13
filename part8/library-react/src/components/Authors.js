@@ -1,17 +1,28 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { useQuery } from '@apollo/client';
 import { ALL_AUTHORS } from '../queries';
 import AuthorForm from "./AuthorForm";
 
 const Authors = (props) => {
     const useQuery1 = useQuery(ALL_AUTHORS)
-    if (!props.show){
-        return null
-    }
+    const [authors, setAuthors] = useState([])
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+        if (useQuery1.data) {
+            setAuthors(useQuery1.data.allAuthors)
+        }
+    }, [useQuery1])
+
+
     if (useQuery1.loading) {
         return <div>loading...</div>;
     }
-    const authors = useQuery1.data.allAuthors
+
+    if (!props.show){
+        return null
+    }
+
 
     return (
         <div>
@@ -24,7 +35,7 @@ const Authors = (props) => {
                     <th>books</th>
                 </tr>
                 {authors.map(author =>
-                    <tr key={author.name}>
+                    <tr key={author.id}>
                         <td>{author.name}</td>
                         <td>{author.born}</td>
                         <td>{author.bookCount}</td>

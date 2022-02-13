@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import {ALL_AUTHORS, EDIT_AUTHOR} from "../queries";
 import Select from 'react-select';
-import authors from "./Authors";
 
 const AuthorForm = ({data}) => {
     const [name, setName] = useState('')

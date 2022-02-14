@@ -61,4 +61,13 @@ export const LOGIN = gql`
       token
     }
   }
-`
+`;
+
+export const ME = gql`
+  query me {
+    me {
+      username
+      favoriteGenre
+    }
+  }
+`;
